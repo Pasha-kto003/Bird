@@ -43,7 +43,7 @@ namespace Bird
 
             if (Canvas.GetTop(Bird) <  -10 || Canvas.GetTop(Bird) > 458)
             {
-                EndGame();
+                EndGame(); // вылет за предел карты
             }
 
             foreach (var x in CanvasName.Children.OfType<Image>())
@@ -55,7 +55,7 @@ namespace Bird
                     if(Canvas.GetLeft(x) < -100)
                     {
                         Canvas.SetLeft(x, 800);
-                        score += 0.5;
+                        score += 0.5; //каждая труба это 0,5 очков
                     }
                     Rect pipeHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height); 
 
@@ -79,7 +79,7 @@ namespace Bird
 
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space)
+            if (e.Key == Key.Space) // птица летает при зажатии кнопки пробел
             {
                 Bird.RenderTransform = new RotateTransform(-20, Bird.Width /2, Bird.Height /2);
                 gravity = -8;
@@ -108,22 +108,22 @@ namespace Bird
 
             foreach (var x in CanvasName.Children.OfType<Image>())
             {
-                if((string)x.Tag == "obs1")
+                if((string)x.Tag == "obs1") // колона 1
                 {
                     Canvas.SetLeft(x, 500);
                 }
 
-                if ((string)x.Tag == "obs2")
+                if ((string)x.Tag == "obs2") // колона 2
                 {
                     Canvas.SetLeft(x, 800);
                 }
 
-                if ((string)x.Tag == "obs3")
+                if ((string)x.Tag == "obs3") // колона 3
                 {
                     Canvas.SetLeft(x, 1100);
                 }
 
-                if ((string)x.Tag == "cloud")
+                if ((string)x.Tag == "cloud") // облако
                 {
                     Canvas.SetLeft(x, 300 + temp);
                     temp = 800;
