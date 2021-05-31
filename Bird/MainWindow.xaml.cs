@@ -49,6 +49,7 @@ namespace Bird
                     if(Canvas.GetLeft(x) < -100)
                     {
                         Canvas.SetLeft(x, 800);
+                        score += .5;
                     }
                 }
             }
