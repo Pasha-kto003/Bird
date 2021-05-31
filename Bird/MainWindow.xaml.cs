@@ -38,8 +38,14 @@ namespace Bird
         private void MainEventTimer(object sender, EventArgs e)
         {
             Score.Content = "Score: " + score;
-            birdHitBox = new Rect(Canvas.GetLeft(Bird), Canvas.GetTop(Bird), Bird.Width, Bird.Height);
+            birdHitBox = new Rect(Canvas.GetLeft(Bird), Canvas.GetTop(Bird), Bird.Width - 5, Bird.Height);
             Canvas.SetTop(Bird, Canvas.GetTop(Bird) + gravity);
+
+            if (Canvas.GetTop(Bird) <  -10 || Canvas.GetTop(Bird) > 458)
+            {
+                EndGame();
+            }
+
             foreach (var x in CanvasName.Children.OfType<Image>())
             {
                 if((string)x.Tag == "obs1" || (string)x.Tag == "obs2" || (string)x.Tag == "obs3")
@@ -49,7 +55,23 @@ namespace Bird
                     if(Canvas.GetLeft(x) < -100)
                     {
                         Canvas.SetLeft(x, 800);
-                        score += .5;
+                        score += 0.5;
+                    }
+                    Rect pipeHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height); 
+
+                    if (birdHitBox.IntersectsWith(pipeHitBox))
+                    {
+                        EndGame();
+                    }
+                }
+
+                if((string)x.Tag == "cloud")
+                {
+                    Canvas.SetLeft(x, Canvas.GetLeft(x) - 2);
+
+                    if (Canvas.GetLeft(x) < -250)
+                    {
+                        Canvas.SetLeft(x, 550);
                     }
                 }
             }
@@ -113,7 +135,9 @@ namespace Bird
 
         private void EndGame()
         {
-
+            timerGame.Stop();
+            gameover = true;
+            Score.Content += "Игра окончена || Нажмите R чтобы начать заново";
         }
     }
 }
